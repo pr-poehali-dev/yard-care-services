@@ -11,6 +11,16 @@ import {
 const HERO_IMG =
   'https://cdn.poehali.dev/projects/2dd93f20-681a-4930-9fd3-88e818ffaf5e/files/b06da20c-fcce-4a4d-b8ab-754ec55aaa54.jpg';
 
+const GALLERY = [
+  { src: 'https://cdn.poehali.dev/projects/2dd93f20-681a-4930-9fd3-88e818ffaf5e/files/0b50a67e-2ff7-4c32-a372-b41992988c45.jpg', title: 'Ухоженные клумбы' },
+  { src: 'https://cdn.poehali.dev/projects/2dd93f20-681a-4930-9fd3-88e818ffaf5e/files/aab1709e-7e1c-497c-9866-d9a9b16d51d4.jpg', title: 'Аккуратные грядки' },
+  { src: HERO_IMG, title: 'Зелёный газон' },
+];
+
+const PHONE_DISPLAY = '8 (929) 365-63-56';
+const PHONE_TEL = 'tel:+79293656356';
+const PHONE_SMS = 'sms:+79293656356';
+
 const NAV = [
   { id: 'hero', label: 'Главная' },
   { id: 'services', label: 'Услуги' },
@@ -65,9 +75,11 @@ const Index = () => {
               </button>
             ))}
           </nav>
-          <Button onClick={() => scrollTo('contact')} className="rounded-full font-semibold">
-            Оставить заявку
-          </Button>
+          <a href={PHONE_TEL} className="rounded-full font-semibold">
+            <Button className="rounded-full font-semibold gap-2">
+              <Icon name="Phone" size={16} /> Позвонить
+            </Button>
+          </a>
         </div>
       </header>
 
@@ -87,14 +99,23 @@ const Index = () => {
               Прополка, полив, уборка и хозработы. А пока вы в отъезде — присмотрим за домом и любимыми питомцами.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button size="lg" onClick={() => scrollTo('contact')} className="rounded-full font-semibold text-base h-13 px-8 hover-scale">
-                Заказать услугу <Icon name="ArrowRight" size={18} className="ml-1" />
-              </Button>
-              <Button size="lg" variant="outline" onClick={() => scrollTo('pricing')} className="rounded-full font-semibold text-base h-13 px-8 border-2">
-                Смотреть цены
-              </Button>
+              <a href={PHONE_TEL}>
+                <Button size="lg" className="rounded-full font-semibold text-base h-13 px-8 hover-scale gap-2">
+                  <Icon name="Phone" size={18} /> Позвонить
+                </Button>
+              </a>
+              <a href={PHONE_SMS}>
+                <Button size="lg" variant="outline" className="rounded-full font-semibold text-base h-13 px-8 border-2 gap-2">
+                  <Icon name="MessageSquare" size={18} /> Написать SMS
+                </Button>
+              </a>
             </div>
             <div className="flex items-center gap-8 mt-10">
+              <div>
+                <div className="font-display font-extrabold text-3xl text-primary">5 лет</div>
+                <div className="text-sm text-muted-foreground">опыт работы</div>
+              </div>
+              <div className="w-px h-10 bg-border" />
               <div>
                 <div className="font-display font-extrabold text-3xl text-primary">500+</div>
                 <div className="text-sm text-muted-foreground">довольных клиентов</div>
@@ -143,8 +164,28 @@ const Index = () => {
         </div>
       </section>
 
+      {/* GALLERY */}
+      <section className="py-24">
+        <div className="container">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <h2 className="font-display font-extrabold text-4xl md:text-5xl mb-4">Наши работы</h2>
+            <p className="text-muted-foreground text-lg">Так выглядят участки после нашей заботы</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {GALLERY.map((g) => (
+              <div key={g.title} className="group relative rounded-3xl overflow-hidden hover-scale">
+                <img src={g.src} alt={g.title} className="w-full aspect-[4/3] object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                  <span className="font-display font-bold text-lg text-background">{g.title}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* PRICING */}
-      <section id="pricing" className="py-24">
+      <section id="pricing" className="py-24 bg-muted/40">
         <div className="container">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <h2 className="font-display font-extrabold text-4xl md:text-5xl mb-4">Прайс-лист</h2>
@@ -190,7 +231,7 @@ const Index = () => {
       </section>
 
       {/* REVIEWS */}
-      <section id="reviews" className="py-24 bg-muted/40">
+      <section id="reviews" className="py-24">
         <div className="container">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <h2 className="font-display font-extrabold text-4xl md:text-5xl mb-4">Отзывы клиентов</h2>
@@ -218,16 +259,16 @@ const Index = () => {
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="py-24">
+      <section id="about" className="py-24 bg-muted/40">
         <div className="container grid lg:grid-cols-2 gap-14 items-center">
           <div>
             <h2 className="font-display font-extrabold text-4xl md:text-5xl mb-6">О нас</h2>
             <p className="text-lg text-muted-foreground mb-6">
-              «ЗелёныйДом» — команда, которая любит порядок и заботу. Мы берём на себя всё, что связано с уходом за участком, домом и питомцами, чтобы вы могли спокойно отдыхать.
+              «ЗелёныйДом» — команда с опытом работы 5 лет, которая любит порядок и заботу. Мы берём на себя всё, что связано с уходом за участком, домом и питомцами, чтобы вы могли спокойно отдыхать.
             </p>
             <div className="grid sm:grid-cols-2 gap-4">
               {[
-                { icon: 'Users', title: 'Проверенная команда', text: 'Опытные и ответственные специалисты' },
+                { icon: 'Award', title: '5 лет опыта', text: 'Проверенные и ответственные специалисты' },
                 { icon: 'Clock', title: 'Точно по графику', text: 'Приезжаем в удобное вам время' },
                 { icon: 'Camera', title: 'Фото-отчёты', text: 'Вы видите результат каждой работы' },
                 { icon: 'Heart', title: 'С любовью', text: 'Относимся к вашему дому как к своему' },
@@ -268,19 +309,27 @@ const Index = () => {
             <p className="text-primary-foreground/80 text-lg mb-8">
               Оставьте заявку — перезвоним в течение 15 минут и подберём удобное время.
             </p>
-            <div className="space-y-4 mb-8">
-              <a href="tel:+79000000000" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <div className="space-y-4 mb-6">
+              <a href={PHONE_TEL} className="flex items-center gap-3 hover:opacity-80 transition-opacity font-semibold text-lg">
                 <span className="grid place-items-center w-11 h-11 rounded-xl bg-white/15"><Icon name="Phone" size={20} /></span>
-                +7 (900) 000-00-00
-              </a>
-              <a href="mailto:hello@zelenyidom.ru" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <span className="grid place-items-center w-11 h-11 rounded-xl bg-white/15"><Icon name="Mail" size={20} /></span>
-                hello@zelenyidom.ru
+                {PHONE_DISPLAY}
               </a>
               <div className="flex items-center gap-3">
                 <span className="grid place-items-center w-11 h-11 rounded-xl bg-white/15"><Icon name="MapPin" size={20} /></span>
                 Москва и область
               </div>
+            </div>
+            <div className="flex flex-wrap gap-3 mb-8">
+              <a href={PHONE_TEL}>
+                <Button size="lg" className="rounded-full font-semibold bg-accent text-accent-foreground hover:bg-accent/90 gap-2">
+                  <Icon name="Phone" size={18} /> Позвонить
+                </Button>
+              </a>
+              <a href={PHONE_SMS}>
+                <Button size="lg" variant="outline" className="rounded-full font-semibold gap-2 border-2 border-white/40 bg-transparent text-primary-foreground hover:bg-white/10">
+                  <Icon name="MessageSquare" size={18} /> Написать SMS
+                </Button>
+              </a>
             </div>
             <div className="rounded-3xl overflow-hidden border-4 border-white/20 h-64">
               <iframe
